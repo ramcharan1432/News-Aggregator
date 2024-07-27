@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>News Aggregator</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <h1>News Aggregator</h1>
+    </header>
+    <main>
+        <div class="search-bar">
+            <input type="text" id="search" placeholder="Search for news...">
+            <button onclick="fetchNews()">Search</button>
+        </div>
+        <div class="buttons-container">
+            <button onclick="fetchCategory('technology')">Technology</button>
+            <button onclick="fetchCategory('sports')">Sports</button>
+            <button onclick="fetchCategory('business')">Business</button>
+            <button onclick="fetchCategory('entertainment')">Entertainment</button>
+            <button onclick="fetchCategory('health')">Health</button>
+        </div>
+        <div id="loading-spinner" style="display: none;">
+            <img src="spinner.gif" alt="Loading...">
+        </div>
+        <div id="news-container"></div>
+        <section id="support-us">
+            <h2>Did you like the website</h2>
+            <p>We hope you enjoy using our news aggregator app. If you find it useful, please consider supporting us to keep the project running and improve it further. Your support means a lot to us!</p>
+            <p><button onclick="supportUs()">Did you like</button></p>
+        </section>
+    </main>
+    <footer>
+        <p>Powered by NewsAPI</p>
+    </footer>
+    <script src="script.js"></script>
+</body>
+</html>
