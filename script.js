@@ -1,10 +1,17 @@
-const API_KEY = '0e32190be0b54c4d9eaef4938a720f65';
-const NEWS_API_URL = 'https://newsapi.org/v2/everything';
+const NEWS_API_URL = 'https://newsapi.org/v2/everything'; // News API URL
+const API_KEY = '0e32190be0b54c4d9eaef4938a720f65'; // Replace with your API Key
 
+// Function to fetch news based on a search query
 async function fetchNews() {
-    const query = document.getElementById('search').value;
+    const query = document.getElementById('search').value.trim();
+    if (!query) {
+        alert('Please enter a search term.');
+        return;
+    }
+
     const url = `${NEWS_API_URL}?q=${query}&apiKey=${API_KEY}`;
 
+    // Show loading spinner
     document.getElementById('loading-spinner').style.display = 'block';
 
     try {
@@ -18,15 +25,18 @@ async function fetchNews() {
         displayNews(data.articles);
     } catch (error) {
         console.error('Error fetching news:', error);
-        alert('There was an error fetching the news. Please try again later.');
+        alert('Failed to fetch news. Please try again later.');
     } finally {
+        // Hide loading spinner
         document.getElementById('loading-spinner').style.display = 'none';
     }
 }
 
+// Function to fetch news by category
 async function fetchCategory(category) {
     const url = `${NEWS_API_URL}?q=${category}&apiKey=${API_KEY}`;
 
+    // Show loading spinner
     document.getElementById('loading-spinner').style.display = 'block';
 
     try {
@@ -40,15 +50,22 @@ async function fetchCategory(category) {
         displayNews(data.articles);
     } catch (error) {
         console.error('Error fetching news:', error);
-        alert('There was an error fetching the news. Please try again later.');
+        alert('Failed to fetch news. Please try again later.');
     } finally {
+        // Hide loading spinner
         document.getElementById('loading-spinner').style.display = 'none';
     }
 }
 
+// Function to display fetched news on the page
 function displayNews(articles) {
     const newsContainer = document.getElementById('news-container');
-    newsContainer.innerHTML = '';
+    newsContainer.innerHTML = ''; // Clear previous news articles
+
+    if (articles.length === 0) {
+        newsContainer.innerHTML = '<p>No articles found.</p>';
+        return;
+    }
 
     articles.forEach(article => {
         const articleElement = document.createElement('div');
@@ -56,14 +73,14 @@ function displayNews(articles) {
 
         articleElement.innerHTML = `
             <h2>${article.title}</h2>
-            <p>${article.description}</p>
+            <p>${article.description || 'No description available.'}</p>
             <a href="${article.url}" target="_blank">Read more</a>
         `;
 
         newsContainer.appendChild(articleElement);
     });
 
-    // Adding delay for the animation to be noticeable
+    // Optional animation for news articles
     setTimeout(() => {
         document.querySelectorAll('.news-article').forEach(article => {
             article.style.animation = 'slideIn 0.5s ease-in-out';
@@ -71,6 +88,7 @@ function displayNews(articles) {
     }, 100);
 }
 
+// "Support Us" button functionality
 function supportUs() {
-    alert('Thanks for your feedback!');
+    alert('Thank you for your support!');
 }
